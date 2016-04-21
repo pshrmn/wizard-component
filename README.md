@@ -1,4 +1,4 @@
-#Wizard Component
+#Simple Wizard Component
 
 A React component to create a setup wizard that passes the state from one step to the next. Any validation should be done by the step components, the Wizard just facilitates the data flow.
 
@@ -17,3 +17,15 @@ Step components can be whatever you want them to be. They receive a `data` objec
 `data` - the current state of the wizard as a result of the previous step. (empty object for the first step)
 `previous` - return to the previous step
 `next` - proceed to the next step (or call the save Wizard's finish function for the last step)
+
+##Usage
+
+```javascript
+const YourWizard = React.createClass({
+  render: function() {
+    return (
+      <Wizard steps={steps} save={() => {/*...*/}} cancel={() => {/*...*/}} />
+    );
+  }
+});
+```
