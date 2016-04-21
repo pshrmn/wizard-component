@@ -1,0 +1,39 @@
+{
+  "name": "wizard-component",
+  "version": "0.1.0",
+  "description": "a basic wizard for use in React",
+  "files": [
+    "lib",
+    "LICENSE",
+    "*.md"
+  ],
+  "main": "lib/index.js",
+  "scripts": {
+    "prebuild": "rimraf lib",
+    "build": "babel ./src -d lib",
+    "test": "mocha tests --compilers js:babel-core/register --recursive"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git://github.com/pshrmn/wizard-component.git"
+  },
+  "keywords": [
+    "react",
+    "wizard"
+  ],
+  "author": "Paul Sherman",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/pshrmn/wizard-component/issues"
+  },
+  "homepage": "https://github.com/pshrmn/wizard-component#readme",
+  "devDependencies": {
+    "babel-cli": "^6.7.5",
+    "babel-core": "^6.7.6",
+    "babel-preset-es2015": "^6.6.0",
+    "babel-preset-react": "^6.5.0",
+    "chai": "^3.5.0",
+    "mocha": "^2.4.5",
+    "rimraf": "^2.5.2"
+  }
+}
