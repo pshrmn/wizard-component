@@ -2,70 +2,97 @@ import React from 'react';
 import ReadDOM from 'react-dom';
 import Wizard from '../../lib/index';
 
-const FirstStep = React.createClass({
+const NameComponent = React.createClass({
   getInitialState: function() {
+    const { endData = {}} = this.props;
+    const { name = ''} = endData;
     return {
-      name: ''
+      completed: name !== '',
+      name: name
     };
   },
-  handleSubmit: function(event) {
-    event.preventDefault();
-    this.props.next({
-      name: this.state.name
-    });
+  nextHandler: function(event) {
+    const { completed, name } = this.state;
+    if ( !completed ) {
+      return;
+    }
+    const { startData } = this.props;
+    this.props.next(Object.assign({}, startData, {name}));
   },
   handleName: function(event) {
     this.setState({
-      name: event.target.value
+      name: event.target.value,
+      completed: event.target.value !== ""
     });
   },
-  render: function() {
-    const { data, previous } = this.props;
+  renderButtons: function() {
+    const { next, previous, cancel } = this.props;
+    const { completed } = this.state;
     return (
-      <div>
-        <label>
-          Name: <input onChange={this.handleName} value={this.state.name} />
-        </label>
+      <div className='step-controls'>
+        { previous !== undefined ? <button onClick={previous}>Previous</button> : null}
+        <button onClick={this.nextHandler} disabled={!completed} >Next</button>
+        <button onClick={cancel}>Cancel</button>
+      </div>
+    );
+  },
+  render: function() {
+    return (
+      <div className='step'>
         <p>
-          <button onClick={() => previous()}>Previous</button>
-          <button onClick={this.handleSubmit}>Next</button>
+          <label>
+            Name: <input value={this.state.name} onChange={this.handleName} />
+          </label>
         </p>
+        { this.renderButtons() }
       </div>
     );
   }
 });
 
-const SecondStep = React.createClass({
+const AgeComponent = React.createClass({
   getInitialState: function() {
+    const { endData = {}} = this.props;
+    const { age = ''} = endData;
     return {
-      age: 0
+      completed: age !== '',
+      age: age
     };
   },
-  handleSubmit: function(event) {
-    event.preventDefault();
-    const { data, next } = this.props;
-    // merge the data with data from previous step
-    const fullData = Object.assign({}, data, {
-      age: this.state.age
-    });
-    this.props.next(fullData);
+  nextHandler: function(event) {
+    const { completed, age } = this.state;
+    if ( !completed ) {
+      return;
+    }
+    const { startData } = this.props;
+    this.props.next(Object.assign({}, startData, {age}));
   },
   handleAge: function(event) {
     this.setState({
-      age: parseInt(event.target.value, 10)
+      age: Math.max(parseInt(event.target.value, 10), 0),
+      completed: event.target.value !== ""
     });
   },
-  render: function() {
-    const { data, previous } = this.props;
+  renderButtons: function() {
+    const { next, previous, cancel } = this.props;
+    const { completed } = this.state;
     return (
-      <div>
-        <label>
-          Age: <input onChange={this.handleAge} type="number" value={this.state.age} />
-        </label>
+      <div className='step-controls'>
+        { previous !== undefined ? <button onClick={previous}>Previous</button> : null}
+        <button onClick={this.nextHandler} disabled={!completed} >Next</button>
+        <button onClick={cancel}>Cancel</button>
+      </div>
+    );
+  },
+  render: function() {
+    return (
+      <div className='step'>
         <p>
-          <button onClick={() => previous()}>Previous</button>
-          <button onClick={this.handleSubmit}>Next</button>
+          <label>
+            Age: <input type='number' value={this.state.age} onChange={this.handleAge} />
+          </label>
         </p>
+        { this.renderButtons() }
       </div>
     );
   }
@@ -73,12 +100,12 @@ const SecondStep = React.createClass({
 
 const VerifyStep = React.createClass({
   handleSubmit: function() {
-    const { next, data } = this.props;
-    this.props.next(data);
+    const { next, startData } = this.props;
+    this.props.next(startData);
   },
   render: function() {
-    const { data, previous } = this.props;
-    const { name, age } = data;
+    const { startData, previous, cancel } = this.props;
+    const { name, age } = startData;
     return (
       <div>
         <p>
@@ -93,6 +120,7 @@ const VerifyStep = React.createClass({
         <p>
           <button onClick={() => previous()}>Previous</button>
           <button onClick={this.handleSubmit}>Submit</button>
+          <button onClick={cancel}>Cancel</button>
         </p>
       </div>
     );
@@ -107,8 +135,8 @@ const BasicWizard = React.createClass({
     console.log('cancelled');
   },
   render: function() {
-    const steps = [FirstStep, SecondStep, VerifyStep];
-    return <Wizard steps={steps} save={this.save} cancel={this.cancel} />
+    const steps = [NameComponent, AgeComponent, VerifyStep];
+    return <Wizard steps={steps} save={this.save} cancel={this.cancel} initialData={{}}/>
   }
 });
 

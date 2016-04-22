@@ -60,114 +60,158 @@
 
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
-	var FirstStep = _react2.default.createClass({
-	  displayName: 'FirstStep',
+	var NameComponent = _react2.default.createClass({
+	  displayName: 'NameComponent',
 
 	  getInitialState: function getInitialState() {
+	    var _props$endData = this.props.endData;
+	    var endData = _props$endData === undefined ? {} : _props$endData;
+	    var _endData$name = endData.name;
+	    var name = _endData$name === undefined ? '' : _endData$name;
+
 	    return {
-	      name: ''
+	      completed: name !== '',
+	      name: name
 	    };
 	  },
-	  handleSubmit: function handleSubmit(event) {
-	    event.preventDefault();
-	    this.props.next({
-	      name: this.state.name
-	    });
+	  nextHandler: function nextHandler(event) {
+	    var _state = this.state;
+	    var completed = _state.completed;
+	    var name = _state.name;
+
+	    if (!completed) {
+	      return;
+	    }
+	    var startData = this.props.startData;
+
+	    this.props.next(Object.assign({}, startData, { name: name }));
 	  },
 	  handleName: function handleName(event) {
 	    this.setState({
-	      name: event.target.value
+	      name: event.target.value,
+	      completed: event.target.value !== ""
 	    });
 	  },
-	  render: function render() {
+	  renderButtons: function renderButtons() {
 	    var _props = this.props;
-	    var data = _props.data;
+	    var next = _props.next;
 	    var previous = _props.previous;
+	    var cancel = _props.cancel;
+	    var completed = this.state.completed;
 
 	    return _react2.default.createElement(
 	      'div',
-	      null,
+	      { className: 'step-controls' },
+	      previous !== undefined ? _react2.default.createElement(
+	        'button',
+	        { onClick: previous },
+	        'Previous'
+	      ) : null,
 	      _react2.default.createElement(
-	        'label',
-	        null,
-	        'Name: ',
-	        _react2.default.createElement('input', { onChange: this.handleName, value: this.state.name })
+	        'button',
+	        { onClick: this.nextHandler, disabled: !completed },
+	        'Next'
 	      ),
+	      _react2.default.createElement(
+	        'button',
+	        { onClick: cancel },
+	        'Cancel'
+	      )
+	    );
+	  },
+	  render: function render() {
+	    return _react2.default.createElement(
+	      'div',
+	      { className: 'step' },
 	      _react2.default.createElement(
 	        'p',
 	        null,
 	        _react2.default.createElement(
-	          'button',
-	          { onClick: function onClick() {
-	              return previous();
-	            } },
-	          'Previous'
-	        ),
-	        _react2.default.createElement(
-	          'button',
-	          { onClick: this.handleSubmit },
-	          'Next'
+	          'label',
+	          null,
+	          'Name: ',
+	          _react2.default.createElement('input', { value: this.state.name, onChange: this.handleName })
 	        )
-	      )
+	      ),
+	      this.renderButtons()
 	    );
 	  }
 	});
 
-	var SecondStep = _react2.default.createClass({
-	  displayName: 'SecondStep',
+	var AgeComponent = _react2.default.createClass({
+	  displayName: 'AgeComponent',
 
 	  getInitialState: function getInitialState() {
+	    var _props$endData2 = this.props.endData;
+	    var endData = _props$endData2 === undefined ? {} : _props$endData2;
+	    var _endData$age = endData.age;
+	    var age = _endData$age === undefined ? '' : _endData$age;
+
 	    return {
-	      age: 0
+	      completed: age !== '',
+	      age: age
 	    };
 	  },
-	  handleSubmit: function handleSubmit(event) {
-	    event.preventDefault();
-	    var _props2 = this.props;
-	    var data = _props2.data;
-	    var next = _props2.next;
-	    // merge the data with data from previous step
+	  nextHandler: function nextHandler(event) {
+	    var _state2 = this.state;
+	    var completed = _state2.completed;
+	    var age = _state2.age;
 
-	    var fullData = Object.assign({}, data, {
-	      age: this.state.age
-	    });
-	    this.props.next(fullData);
+	    if (!completed) {
+	      return;
+	    }
+	    var startData = this.props.startData;
+
+	    this.props.next(Object.assign({}, startData, { age: age }));
 	  },
 	  handleAge: function handleAge(event) {
 	    this.setState({
-	      age: parseInt(event.target.value, 10)
+	      age: Math.max(parseInt(event.target.value, 10), 0),
+	      completed: event.target.value !== ""
 	    });
 	  },
-	  render: function render() {
-	    var _props3 = this.props;
-	    var data = _props3.data;
-	    var previous = _props3.previous;
+	  renderButtons: function renderButtons() {
+	    var _props2 = this.props;
+	    var next = _props2.next;
+	    var previous = _props2.previous;
+	    var cancel = _props2.cancel;
+	    var completed = this.state.completed;
 
 	    return _react2.default.createElement(
 	      'div',
-	      null,
+	      { className: 'step-controls' },
+	      previous !== undefined ? _react2.default.createElement(
+	        'button',
+	        { onClick: previous },
+	        'Previous'
+	      ) : null,
 	      _react2.default.createElement(
-	        'label',
-	        null,
-	        'Age: ',
-	        _react2.default.createElement('input', { onChange: this.handleAge, type: 'number', value: this.state.age })
+	        'button',
+	        { onClick: this.nextHandler, disabled: !completed },
+	        'Next'
 	      ),
+	      _react2.default.createElement(
+	        'button',
+	        { onClick: cancel },
+	        'Cancel'
+	      )
+	    );
+	  },
+	  render: function render() {
+	    return _react2.default.createElement(
+	      'div',
+	      { className: 'step' },
 	      _react2.default.createElement(
 	        'p',
 	        null,
 	        _react2.default.createElement(
-	          'button',
-	          { onClick: function onClick() {
-	              return previous();
-	            } },
-	          'Previous'
-	        ),
-	        _react2.default.createElement(
-	          'button',
-	          { onClick: this.handleSubmit },
-	          'Next'
+	          'label',
+	          null,
+	          'Age: ',
+	          _react2.default.createElement('input', { type: 'number', value: this.state.age, onChange: this.handleAge })
 	        )
-	      )
+	      ),
+	      this.renderButtons()
 	    );
 	  }
 	});
@@ -176,18 +220,19 @@
 	  displayName: 'VerifyStep',
 
 	  handleSubmit: function handleSubmit() {
-	    var _props4 = this.props;
-	    var next = _props4.next;
-	    var data = _props4.data;
+	    var _props3 = this.props;
+	    var next = _props3.next;
+	    var startData = _props3.startData;
 
-	    this.props.next(data);
+	    this.props.next(startData);
 	  },
 	  render: function render() {
-	    var _props5 = this.props;
-	    var data = _props5.data;
-	    var previous = _props5.previous;
-	    var name = data.name;
-	    var age = data.age;
+	    var _props4 = this.props;
+	    var startData = _props4.startData;
+	    var previous = _props4.previous;
+	    var cancel = _props4.cancel;
+	    var name = startData.name;
+	    var age = startData.age;
 
 	    return _react2.default.createElement(
 	      'div',
@@ -223,6 +268,11 @@
 	          'button',
 	          { onClick: this.handleSubmit },
 	          'Submit'
+	        ),
+	        _react2.default.createElement(
+	          'button',
+	          { onClick: cancel },
+	          'Cancel'
 	        )
 	      )
 	    );
@@ -239,8 +289,8 @@
 	    console.log('cancelled');
 	  },
 	  render: function render() {
-	    var steps = [FirstStep, SecondStep, VerifyStep];
-	    return _react2.default.createElement(_index2.default, { steps: steps, save: this.save, cancel: this.cancel });
+	    var steps = [NameComponent, AgeComponent, VerifyStep];
+	    return _react2.default.createElement(_index2.default, { steps: steps, save: this.save, cancel: this.cancel, initialData: {} });
 	  }
 	});
 
@@ -297,24 +347,35 @@
 	  displayName: 'Wizard',
 
 	  propTypes: {
+	    initialData: _react2.default.PropTypes.object.isRequired,
 	    steps: _react2.default.PropTypes.array.isRequired,
 	    save: _react2.default.PropTypes.func,
 	    cancel: _react2.default.PropTypes.func
 	  },
 	  getInitialState: function getInitialState() {
+	    var _props = this.props;
+	    var initialData = _props.initialData;
+	    var steps = _props.steps;
+
 	    return {
 	      position: 0,
-	      data: []
+	      data: [initialData].concat(Array(steps.length))
 	    };
 	  },
 	  next: function next(newData) {
 	    var _state = this.state;
 	    var position = _state.position;
 	    var data = _state.data;
+	    var steps = this.props.steps;
 
+	    var maxPos = steps.length - 1;
+	    // don't let the position become greater than the number of steps
+	    // (0 normalized)
+	    var nextPos = position === maxPos ? position : position + 1;
+	    data[nextPos] = newData;
 	    this.setState({
-	      position: position + 1,
-	      data: data.concat([newData])
+	      position: nextPos,
+	      data: data
 	    });
 	  },
 	  previous: function previous() {
@@ -323,9 +384,7 @@
 	    var data = _state2.data;
 
 	    this.setState({
-	      position: position - 1,
-	      // throw away any data for subsequent steps
-	      data: data.slice(0, position)
+	      position: position > 0 ? position - 1 : 0
 	    });
 	  },
 	  cancel: function cancel(event) {
@@ -342,14 +401,15 @@
 	    var steps = this.props.steps;
 
 	    var CurrentStep = steps[position];
-	    // current data is the data returned by the previous step
-	    var currentData = data[position - 1] || {};
+	    // don't pass a previous function to the first step
+	    var prevStep = position === 0 ? undefined : this.previous;
 	    // on the last step, call the finish function, otherwise call the next function
 	    var completeStep = position === steps.length - 1 ? this.finish : this.next;
-	    return _react2.default.createElement('div', { className: 'wizard' }, _react2.default.createElement(ProgressBar, { steps: steps.length, position: position }), _react2.default.createElement(CurrentStep, { data: currentData,
+	    return _react2.default.createElement('div', { className: 'wizard' }, _react2.default.createElement(ProgressBar, { steps: steps.length, position: position }), _react2.default.createElement(CurrentStep, { startData: data[position],
+	      endData: data[position + 1],
 	      cancel: this.cancel,
 	      next: completeStep,
-	      previous: this.previous }), _react2.default.createElement('button', { onClick: this.cancel }, 'Cancel'));
+	      previous: prevStep }));
 	  }
 	});
 
@@ -360,15 +420,15 @@
 	  displayName: 'ProgressBar',
 
 	  render: function render() {
-	    var _props = this.props;
-	    var steps = _props.steps;
-	    var position = _props.position;
+	    var _props2 = this.props;
+	    var steps = _props2.steps;
+	    var position = _props2.position;
 
 	    var dots = Array.from(Array(steps)).map(function (s, i) {
-	      var classes = ['step', i < position ? 'complete' : null, i == position ? 'active' : null];
-	      return _react2.default.createElement('li', { key: i, className: classes.join(' ') });
+	      var classes = ['marker', i < position ? 'complete' : null, i == position ? 'active' : null];
+	      return _react2.default.createElement('div', { key: i, className: classes.join(' ') });
 	    });
-	    return _react2.default.createElement('ul', { className: 'progress-bar' }, dots);
+	    return _react2.default.createElement('div', { className: 'progress-bar' }, dots);
 	  }
 	});
 

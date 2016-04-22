@@ -19,29 +19,35 @@ import React from 'react';
  */
 const Wizard = React.createClass({
   propTypes: {
+    initialData: React.PropTypes.object.isRequired,
     steps: React.PropTypes.array.isRequired,
     save: React.PropTypes.func,
     cancel: React.PropTypes.func
   },
   getInitialState: function() {
+    const { initialData, steps } = this.props;
     return {
       position: 0,
-      data: []
+      data: [initialData].concat(Array(steps.length))
     };
   },
   next: function(newData) {
     const { position, data } = this.state;
+    const { steps } = this.props;
+    const maxPos = steps.length - 1;
+    // don't let the position become greater than the number of steps
+    // (0 normalized)
+    const nextPos = position === maxPos ? position : position + 1;
+    data[nextPos] = newData;
     this.setState({
-      position: position + 1,
-      data: data.concat([newData])
+      position: nextPos,
+      data: data
     });
   },
   previous: function() {
     const { position, data } = this.state;
     this.setState({
-      position: position - 1,
-      // throw away any data for subsequent steps
-      data: data.slice(0, position)
+      position: position > 0 ? position - 1 : 0
     });
   },
   cancel: function(event) {
@@ -55,18 +61,18 @@ const Wizard = React.createClass({
     const { position, data } = this.state;
     const { steps } = this.props;
     const CurrentStep = steps[position];
-    // current data is the data returned by the previous step
-    const currentData = data[position-1] || {};
+    // don't pass a previous function to the first step
+    const prevStep = position === 0 ? undefined : this.previous;
     // on the last step, call the finish function, otherwise call the next function
     const completeStep = position === steps.length - 1 ? this.finish : this.next;
     return (
       <div className='wizard'>
         <ProgressBar steps={steps.length} position={position} />
-        <CurrentStep data={currentData}
+        <CurrentStep startData={data[position]}
+                     endData={data[position+1]}
                      cancel={this.cancel}
                      next={completeStep}
-                     previous={this.previous} />
-        <button onClick={this.cancel}>Cancel</button>
+                     previous={prevStep} />
       </div>
     );
   }
@@ -80,16 +86,16 @@ const ProgressBar = React.createClass({
     const { steps, position } = this.props;
     const dots = Array.from(Array(steps)).map((s, i) => {
       const classes = [
-        'step',
+        'marker',
         i < position ? 'complete' : null,
         i == position ? 'active' : null
       ];
-      return <li key={i} className={classes.join(' ') }></li>
+      return <div key={i} className={classes.join(' ') }></div>
     });
     return (
-      <ul className='progress-bar'>
+      <div className='progress-bar'>
         {dots}
-      </ul>
+      </div>
     );
   }
 });
