@@ -50,8 +50,7 @@ const Wizard = React.createClass({
       position: position > 0 ? position - 1 : 0
     });
   },
-  cancel: function(event) {
-    event.preventDefault();
+  cancel: function() {
     this.props.cancel();
   },
   finish: function(data) {
