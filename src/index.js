@@ -89,7 +89,7 @@ const ProgressBar = React.createClass({
         i < position ? 'complete' : null,
         i == position ? 'active' : null
       ];
-      return <div key={i} className={classes.join(' ') }></div>
+      return <div key={i} className={classes.join(' ')}></div>
     });
     return (
       <div className='progress-bar'>

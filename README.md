@@ -33,7 +33,7 @@ Step components can be whatever you want them to be. They receive `startData` an
 
 It doesn't make sense for the first step to have a previous button since nothing exists before the first step. The wizard will pass `previous=undefined` for the first step, and it is up to you to render the step to show this (either by disabling the previous button or by not rendering it at all).
 
-While a step is considered incomplete, it is a good idea to leave the `next` button disabled. It is useful for a step component to keep a `completed` or `finished` property about itself to determine whether or not the `next` button should be disabled.
+While a step is considered incomplete, it is a good idea to leave the `next` button disabled. It is useful for a step component to keep a `completed` or `error` property about itself to determine whether or not the `next` button should be disabled.
 
 The `startData` passed to a step is all that it knows about the results of previous steps. The value passed to the next function should always be an object. It is up to you to pass on all data that will be relevant to future steps.
 
@@ -88,4 +88,47 @@ const NameComponent = React.createClass({
     );
   }
 });
+```
+
+###Styling
+
+The wizard component does not use any styles by default. The CSS below is a decent looking option (also available in the basic.css file)
+
+```css
+.progress-bar {
+  display: -webkit-flex;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-flex-flow: row nowrap;
+      -ms-flex-flow: row nowrap;
+          flex-flow: row nowrap;
+  -webkit-justify-content: space-between;
+      -ms-flex-pack: justify;
+          justify-content: space-between;
+}
+
+.progress-bar .marker {
+  height: 10px;
+  background: #F799B5;
+  -webkit-flex-grow: 1;
+      -ms-flex-positive: 1;
+          flex-grow: 1;
+  border: 1px solid #ffffff;
+}
+
+.progress-bar .marker.active {
+  background: #225683;
+}
+
+.progress-bar .marker.complete {
+  background: #76B85C;
+}
+
+.progress-bar .marker:first-child {
+  border-radius: 5px 0 0 5px;
+}
+
+.progress-bar .marker:last-child {
+  border-radius: 0 5px 5px 0;
+}
 ```
