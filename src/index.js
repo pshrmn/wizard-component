@@ -15,6 +15,8 @@ import React from 'react';
  *   steps - an array of steps that need to be completed to finish the wizard
  *   save - a function to call once all steps have been completed
  *   cancel - a function to call to immediately exit the wizard
+ *   children - any child elements will be passed to the step, which needs to
+ *       handle rendering them
  * state - the wizard maintains two pieces of state:
  *   position - which step it is currently on
  *   data - an array of datum, one for each step
@@ -61,7 +63,7 @@ const Wizard = React.createClass({
   },
   render: function() {
     const { position, data } = this.state;
-    const { steps, extraData } = this.props;
+    const { steps, extraData, children } = this.props;
     const CurrentStep = steps[position];
     // don't pass a previous function to the first step
     const prevStep = position === 0 ? undefined : this.previous;
@@ -75,7 +77,9 @@ const Wizard = React.createClass({
                      extraData={extraData}
                      cancel={this.cancel}
                      next={completeStep}
-                     previous={prevStep} />
+                     previous={prevStep}>
+          {children}
+        </CurrentStep>
       </div>
     );
   }

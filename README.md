@@ -9,6 +9,7 @@ A React component to create a setup wizard that passes the state from one step t
 `steps` - an array of components. Each step 
 `save` - a function to call when the wizard is complete.
 `cancel` - a function to call to exit the wizard.
+`children` - any child elements passed to the wizard will be passed on to the steps to render
 
 ##Usage
 
@@ -33,6 +34,7 @@ Step components can be whatever you want them to be. They receive `startData` an
 `extraData` - any extra data that was passed to the wizard.
 `previous` - return to the previous step
 `next` - proceed to the next step (or call the save Wizard's finish function for the last step)
+`children` - any child elements passed to the wizard are passed on to the step to render
 
 It doesn't make sense for the first step to have a previous button since nothing exists before the first step. The wizard will pass `previous=undefined` for the first step, and it is up to you to render the step to show this (either by disabling the previous button or by not rendering it at all).
 
