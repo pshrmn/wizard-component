@@ -4,6 +4,8 @@ A React component to create a setup wizard that passes the state from one step t
 
 ####props
 
+`initialData` - an object with data that should be available to the first step
+`extraData` - data that is useful to all steps
 `steps` - an array of components. Each step 
 `save` - a function to call when the wizard is complete.
 `cancel` - a function to call to exit the wizard.
@@ -28,6 +30,7 @@ Step components can be whatever you want them to be. They receive `startData` an
 
 `startData` - the current state of the wizard as a result of the previous step.
 `endData` - the data returned by the component. This is useful for re-populating the step when travelling backwards.
+`extraData` - any extra data that was passed to the wizard.
 `previous` - return to the previous step
 `next` - proceed to the next step (or call the save Wizard's finish function for the last step)
 
