@@ -11,7 +11,7 @@ import React from 'react';
  *
  * props -
  *   initialData - an object with data that should be available to the first step
- *   extraData - data that is useful to all steps
+ *   staticData - data that is useful to all steps
  *   steps - an array of steps that need to be completed to finish the wizard
  *   save - a function to call once all steps have been completed
  *   cancel - a function to call to immediately exit the wizard
@@ -66,7 +66,7 @@ class Wizard extends React.Component {
 
   render() {
     const { position, data } = this.state;
-    const { steps, extraData, children } = this.props;
+    const { steps, staticData, children } = this.props;
     const CurrentStep = steps[position];
     // don't pass a previous function to the first step
     const prevStep = position === 0 ? undefined : this.previous;
@@ -77,7 +77,7 @@ class Wizard extends React.Component {
         <ProgressBar steps={steps.length} position={position} />
         <CurrentStep startData={data[position]}
                      endData={data[position+1]}
-                     extraData={extraData}
+                     staticData={staticData}
                      cancel={this.cancel}
                      next={completeStep}
                      previous={prevStep}>
@@ -91,7 +91,7 @@ class Wizard extends React.Component {
 Wizard.propTypes = {
   initialData: React.PropTypes.object.isRequired,
   steps: React.PropTypes.array.isRequired,
-  extraData: React.PropTypes.object,
+  staticData: React.PropTypes.object,
   save: React.PropTypes.func,
   cancel: React.PropTypes.func
 };

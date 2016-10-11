@@ -5,7 +5,7 @@ A React component to create a setup wizard that passes the state from one step t
 ####props
 
 `initialData` - an object with data that should be available to the first step
-`extraData` - data that is useful to all steps
+`staticData` - data that is useful to all steps and will not change
 `steps` - an array of components. Each step 
 `save` - a function to call when the wizard is complete.
 `cancel` - a function to call to exit the wizard.
@@ -31,7 +31,7 @@ Step components can be whatever you want them to be. They receive `startData` an
 
 `startData` - the current state of the wizard as a result of the previous step.
 `endData` - the data returned by the component. This is useful for re-populating the step when travelling backwards.
-`extraData` - any extra data that was passed to the wizard.
+`staticData` - any extra data that was passed to the wizard.
 `previous` - return to the previous step
 `next` - proceed to the next step (or call the save Wizard's finish function for the last step)
 `children` - any child elements passed to the wizard are passed on to the step to render
@@ -46,30 +46,38 @@ The `startData` passed to a step is all that it knows about the results of previ
 ##Step Example
 
 ```javascript
-const NameComponent = React.createClass({
-  getInitialState: function() {
-    const { endData = {}} = this.props;
+class NameComponent extends React.Component {
+  constructor(props) {
+    super(props);
+    const { endData = {}} = props;
     const { name = ''} = endData;
-    return {
+    this.state = {
+      name
       completed: name !== '',
-      name: name
     };
-  },
-  nextHandler: function(event) {
+
+    this.nextHandler = this.nextHandler.bind(this);
+    this.handleName = this.handleName.bind(this);
+    this.renderButtons = this.renderButtons.bind(this);
+  }
+ 
+  nextHandler(event) {
     const { completed, name } = this.state;
     if ( !completed ) {
       return;
     }
     const { startData } = this.props;
     this.props.next(Object.assign({}, startData, {name}));
-  },
-  handleName: function(event) {
+  }
+
+  handleName(event) {
     this.setState({
       name: event.target.value,
       completed: event.target.value !== ""
     });
-  },
-  renderButtons: function() {
+  }
+
+  renderButtons() {
     const { next, previous, cancel } = this.props;
     const { completed } = this.state;
     return (
@@ -79,8 +87,9 @@ const NameComponent = React.createClass({
         <button onClick={cancel}>Cancel</button>
       </div>
     );
-  },
-  render: function() {
+  }
+
+  render() {
     return (
       <div className='step'>
         <p>
@@ -92,7 +101,7 @@ const NameComponent = React.createClass({
       </div>
     );
   }
-});
+}
 ```
 
 ###Styling
