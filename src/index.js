@@ -21,22 +21,21 @@ import React from 'react';
  *   position - which step it is currently on
  *   data - an array of datum, one for each step
  */
-const Wizard = React.createClass({
-  propTypes: {
-    initialData: React.PropTypes.object.isRequired,
-    steps: React.PropTypes.array.isRequired,
-    extraData: React.PropTypes.object,
-    save: React.PropTypes.func,
-    cancel: React.PropTypes.func
-  },
-  getInitialState: function() {
-    const { initialData, steps } = this.props;
-    return {
+class Wizard extends React.Component {
+  constructor(props) {
+    super(props);
+    this.state = {
       position: 0,
-      data: [initialData].concat(Array(steps.length))
+      data: [props.initialData].concat(Array(props.steps.length))
     };
-  },
-  next: function(newData) {
+
+    this.next = this.next.bind(this);
+    this.previous = this.previous.bind(this);
+    this.cancel = this.cancel.bind(this);
+    this.finish = this.finish.bind(this);
+  }
+
+  next(newData) {
     const { position, data } = this.state;
     const { steps } = this.props;
     const maxPos = steps.length - 1;
@@ -48,20 +47,24 @@ const Wizard = React.createClass({
       position: nextPos,
       data: data
     });
-  },
-  previous: function() {
+  }
+
+  previous() {
     const { position, data } = this.state;
     this.setState({
       position: position > 0 ? position - 1 : 0
     });
-  },
-  cancel: function() {
+  }
+
+  cancel() {
     this.props.cancel();
-  },
-  finish: function(data) {
+  }
+
+  finish(data) {
     this.props.save(data);
-  },
-  render: function() {
+  }
+
+  render() {
     const { position, data } = this.state;
     const { steps, extraData, children } = this.props;
     const CurrentStep = steps[position];
@@ -83,28 +86,34 @@ const Wizard = React.createClass({
       </div>
     );
   }
-});
+}
+
+Wizard.propTypes = {
+  initialData: React.PropTypes.object.isRequired,
+  steps: React.PropTypes.array.isRequired,
+  extraData: React.PropTypes.object,
+  save: React.PropTypes.func,
+  cancel: React.PropTypes.func
+};
 
 /*
  * Visual progression through the steps
  */
-const ProgressBar = React.createClass({
-  render: function() {
-    const { steps, position } = this.props;
-    const dots = Array.from(Array(steps)).map((s, i) => {
-      const classes = [
-        'marker',
-        i < position ? 'complete' : null,
-        i == position ? 'active' : null
-      ];
-      return <div key={i} className={classes.join(' ')}></div>
-    });
-    return (
-      <div className='progress-bar'>
-        {dots}
-      </div>
-    );
-  }
-});
+const ProgressBar = ({steps, position}) => (
+  <div className='progress-bar'>
+    {
+      Array.from(Array(steps)).map((s, i) => (
+        <div
+          key={i}
+          className={[
+            'marker',
+            i < position ? 'complete' : null,
+            i == position ? 'active' : null
+          ].join(' ')}>
+        </div>
+      ))
+    }
+  </div>
+);
 
 export default Wizard;
