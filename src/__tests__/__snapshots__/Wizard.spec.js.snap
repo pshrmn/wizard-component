@@ -1,0 +1,209 @@
+exports[`test calls the save function when next button of last step is called 1`] = `
+<div
+  className="wizard">
+  <div
+    className="progress-bar">
+    <div
+      className="marker active" />
+    <div
+      className="marker" />
+    <div
+      className="marker" />
+  </div>
+  <div>
+    first
+    <button
+      onClick={undefined}>
+      Previous
+    </button>
+    <button
+      onClick={[Function]}>
+      Next
+    </button>
+    <button
+      onClick={[Function]}>
+      Cancel
+    </button>
+  </div>
+</div>
+`;
+
+exports[`test displays a progress bar indicating the active and complete steps 1`] = `
+<div
+  className="wizard">
+  <div
+    className="progress-bar">
+    <div
+      className="marker active" />
+    <div
+      className="marker" />
+    <div
+      className="marker" />
+  </div>
+  <div>
+    first
+    <button
+      onClick={undefined}>
+      Previous
+    </button>
+    <button
+      onClick={[Function]}>
+      Next
+    </button>
+    <button
+      onClick={[Function]}>
+      Cancel
+    </button>
+  </div>
+</div>
+`;
+
+exports[`test goes to the next step when the next button is clicked 1`] = `
+<div
+  className="wizard">
+  <div
+    className="progress-bar">
+    <div
+      className="marker active" />
+    <div
+      className="marker" />
+    <div
+      className="marker" />
+  </div>
+  <div>
+    first
+    <button
+      onClick={undefined}>
+      Previous
+    </button>
+    <button
+      onClick={[Function]}>
+      Next
+    </button>
+    <button
+      onClick={[Function]}>
+      Cancel
+    </button>
+  </div>
+</div>
+`;
+
+exports[`test goes to the next step when the next button is clicked 2`] = `
+<div
+  className="wizard">
+  <div
+    className="progress-bar">
+    <div
+      className="marker complete" />
+    <div
+      className="marker active" />
+    <div
+      className="marker" />
+  </div>
+  <div>
+    second
+    <button
+      onClick={[Function]}>
+      Previous
+    </button>
+    <button
+      onClick={[Function]}>
+      Next
+    </button>
+    <button
+      onClick={[Function]}>
+      Cancel
+    </button>
+  </div>
+</div>
+`;
+
+exports[`test goes to the previous step when the previous button is clicked 1`] = `
+<div
+  className="wizard">
+  <div
+    className="progress-bar">
+    <div
+      className="marker active" />
+    <div
+      className="marker" />
+    <div
+      className="marker" />
+  </div>
+  <div>
+    first
+    <button
+      onClick={undefined}>
+      Previous
+    </button>
+    <button
+      onClick={[Function]}>
+      Next
+    </button>
+    <button
+      onClick={[Function]}>
+      Cancel
+    </button>
+  </div>
+</div>
+`;
+
+exports[`test goes to the previous step when the previous button is clicked 2`] = `
+<div
+  className="wizard">
+  <div
+    className="progress-bar">
+    <div
+      className="marker complete" />
+    <div
+      className="marker active" />
+    <div
+      className="marker" />
+  </div>
+  <div>
+    second
+    <button
+      onClick={[Function]}>
+      Previous
+    </button>
+    <button
+      onClick={[Function]}>
+      Next
+    </button>
+    <button
+      onClick={[Function]}>
+      Cancel
+    </button>
+  </div>
+</div>
+`;
+
+exports[`test goes to the previous step when the previous button is clicked 3`] = `
+<div
+  className="wizard">
+  <div
+    className="progress-bar">
+    <div
+      className="marker active" />
+    <div
+      className="marker" />
+    <div
+      className="marker" />
+  </div>
+  <div>
+    first
+    <button
+      onClick={undefined}>
+      Previous
+    </button>
+    <button
+      onClick={[Function]}>
+      Next
+    </button>
+    <button
+      onClick={[Function]}>
+      Cancel
+    </button>
+  </div>
+</div>
+`;

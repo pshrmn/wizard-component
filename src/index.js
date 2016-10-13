@@ -74,15 +74,16 @@ class Wizard extends React.Component {
     const completeStep = position === steps.length - 1 ? this.finish : this.next;
     return (
       <div className='wizard'>
-        <ProgressBar steps={steps.length} position={position} />
-        <CurrentStep startData={data[position]}
-                     endData={data[position+1]}
-                     staticData={staticData}
-                     cancel={this.cancel}
-                     next={completeStep}
-                     previous={prevStep}>
-          {children}
-        </CurrentStep>
+        <ProgressBar
+          steps={steps.length}
+          position={position} />
+        <CurrentStep
+          startData={data[position]}
+          endData={data[position+1]}
+          staticData={staticData}
+          cancel={this.cancel}
+          next={completeStep}
+          previous={prevStep} />
       </div>
     );
   }
@@ -109,7 +110,7 @@ const ProgressBar = ({steps, position}) => (
             'marker',
             i < position ? 'complete' : null,
             i == position ? 'active' : null
-          ].join(' ')}>
+          ].filter(c => c !== null).join(' ').trim()}>
         </div>
       ))
     }
