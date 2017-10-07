@@ -1,4 +1,5 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 
 /*
  * A Wizard walks through multiple steps to get to a desired state.
@@ -90,11 +91,11 @@ class Wizard extends React.Component {
 }
 
 Wizard.propTypes = {
-  initialData: React.PropTypes.object.isRequired,
-  steps: React.PropTypes.array.isRequired,
-  staticData: React.PropTypes.object,
-  save: React.PropTypes.func,
-  cancel: React.PropTypes.func
+  initialData: PropTypes.object.isRequired,
+  steps: PropTypes.array.isRequired,
+  staticData: PropTypes.object,
+  save: PropTypes.func,
+  cancel: PropTypes.func
 };
 
 /*
