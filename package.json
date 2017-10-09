@@ -1,6 +1,6 @@
 {
   "name": "simple-wizard-component",
-  "version": "0.7.0",
+  "version": "0.7.1",
   "description": "a basic wizard for use in React",
   "files": [
     "lib",

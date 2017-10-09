@@ -85,6 +85,7 @@ class Wizard extends React.Component {
           cancel={this.cancel}
           next={completeStep}
           previous={prevStep} />
+        {children}
       </div>
     );
   }
