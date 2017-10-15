@@ -1,8 +1,8 @@
-#Simple Wizard Component
+# Simple Wizard Component
 
 A React component to create a setup wizard that passes the state from one step to the next. Any validation should be done by the step components, the Wizard just facilitates the data flow.
 
-####props
+#### props
 
 `initialData` - an object with data that should be available to the first step
 `staticData` - data that is useful to all steps and will not change
@@ -11,7 +11,7 @@ A React component to create a setup wizard that passes the state from one step t
 `cancel` - a function to call to exit the wizard.
 `children` - any child elements passed to the wizard will be passed on to the steps to render
 
-##Usage
+## Usage
 
 ```javascript
 const YourWizard = React.createClass({
@@ -23,11 +23,11 @@ const YourWizard = React.createClass({
 });
 ```
 
-##Step Components
+## Step Components
 
 Step components can be whatever you want them to be. They receive `startData` and `endData` objects in their `props` which reflects the current state of the wizard, and return the successive state when their next function is called.
 
-####props
+#### props
 
 `startData` - the current state of the wizard as a result of the previous step.
 `endData` - the data returned by the component. This is useful for re-populating the step when travelling backwards.
@@ -43,7 +43,7 @@ While a step is considered incomplete, it is a good idea to leave the `next` but
 The `startData` passed to a step is all that it knows about the results of previous steps. The value passed to the next function should always be an object. It is up to you to pass on all data that will be relevant to future steps.
 
 
-##Step Example
+## Step Example
 
 ```javascript
 class NameComponent extends React.Component {
@@ -104,7 +104,7 @@ class NameComponent extends React.Component {
 }
 ```
 
-###Styling
+### Styling
 
 The wizard component does not use any styles by default. The CSS below is a decent looking option (also available in the basic.css file)
 
